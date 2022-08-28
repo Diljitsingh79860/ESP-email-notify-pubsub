@@ -5,6 +5,8 @@ var app = expressWs.app;
 const cron = require("node-cron");
 var bodyParser = require("body-parser");
 
+const port = process.env.PORT || 8080;
+
 var aWss = expressWs.getWss("");
 
 // parse application/x-www-form-urlencoded
@@ -66,6 +68,6 @@ app.ws("", (ws) => {
   //   });
 });
 
-app.listen(8080, () => {
+app.listen(port, () => {
   console.log("server has started");
 });
