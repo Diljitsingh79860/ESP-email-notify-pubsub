@@ -51,7 +51,7 @@ app.post("/handle_pub_sub", urlencodedParser, (req, res) => {
   //   ss.appendRow([new Date(), message.message_id, data, message]);
 
   aWss.clients.forEach(function (client) {
-    client.send(JSON.stringify({ ...data, notification_type: "gmail" }));
+    client.send(JSON.stringify(data));
   });
 
   res.send(200);
