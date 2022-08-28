@@ -20,11 +20,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const sendTime = (ws) => {
   let time = new Date();
-  ws.send(JSON.stringify({ data: time.toDateString() }));
-};
-
-const sendPubSubData = (ws, data) => {
-  ws.send(data);
+  ws.send(JSON.stringify({ data: time.toDateString(), type: "time" }));
 };
 
 app.post("/login", urlencodedParser, function (req, res) {
@@ -45,13 +41,8 @@ app.post("/handle_pub_sub", urlencodedParser, (req, res) => {
   var data = atob(message.data);
   console.log("LOGS data : ", data);
 
-  //   var ss = SpreadsheetApp.openById(
-  //     "1locXz7GUHhwMnECP_rB4YqvsjyvWNVFZqH_AIi6fxqQ"
-  //   ).getSheets()[0];
-  //   ss.appendRow([new Date(), message.message_id, data, message]);
-
   aWss.clients.forEach(function (client) {
-    client.send(data);
+    client.send(JSON.stringify({ data: data, type: "gmail" }));
   });
 
   res.send(200);
@@ -60,6 +51,10 @@ app.post("/handle_pub_sub", urlencodedParser, (req, res) => {
 app.ws("", (ws) => {
   ws.on("message", (message) => {
     console.log(message);
+  });
+
+  cron.schedule("* * * * * *", () => {
+    sendTime(ws);
   });
 });
 
