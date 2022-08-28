@@ -40,11 +40,10 @@ app.get("/", urlencodedParser, function (req, res) {
 });
 
 app.post("/handle_pub_sub", urlencodedParser, (req, res) => {
-  console.log("hello", req.body);
-
   //   message decode
-  var message = JSON.parse(e.postData.getDataAsString()).message;
+  var message = req.body.message;
   var data = atob(message.data);
+  console.log("LOGS data : ", data);
 
   //   var ss = SpreadsheetApp.openById(
   //     "1locXz7GUHhwMnECP_rB4YqvsjyvWNVFZqH_AIi6fxqQ"
