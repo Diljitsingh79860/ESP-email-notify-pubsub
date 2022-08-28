@@ -29,7 +29,7 @@ const sendPubSubData = (ws, data) => {
 
 app.post("/login", urlencodedParser, function (req, res) {
   const user_name = req.body.username;
-  res.send("welcome, " + username);
+  res.send("welcome, " + user_name);
   aWss.clients.forEach(function (client) {
     client.send(JSON.stringify(user_name));
   });
@@ -61,7 +61,7 @@ app.post("/handle_pub_sub", urlencodedParser, (req, res) => {
 app.ws("", (ws) => {
   ws.on("message", (message) => {
     console.log(message);
-    ws.send(JSON.stringify({ data: name }));
+    // ws.send(JSON.stringify({ data: "received" }));
   });
 
   // ws.send("ok");
