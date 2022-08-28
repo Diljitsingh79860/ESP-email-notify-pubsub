@@ -29,6 +29,10 @@ app.post("/login", urlencodedParser, function (req, res) {
   res.send("welcome, " + req.body.username);
 });
 
+app.get("/", urlencodedParser, function (req, res) {
+  res.send("welcome, to esp world");
+});
+
 app.post("/handle_pub_sub", urlencodedParser, (req, res) => {
   console.log("hello", req.body);
 
