@@ -28,11 +28,15 @@ const sendPubSubData = (ws, data) => {
 };
 
 app.post("/login", urlencodedParser, function (req, res) {
-  res.send("welcome, " + req.body.username);
+  const user_name = req.body.username;
+  res.send("welcome, " + username);
+  aWss.clients.forEach(function (client) {
+    client.send(JSON.stringify(user_name));
+  });
 });
 
 app.get("/", urlencodedParser, function (req, res) {
-  res.send("welcome, to esp world");
+  res.send("welcome, to esp world" + port);
 });
 
 app.post("/handle_pub_sub", urlencodedParser, (req, res) => {
