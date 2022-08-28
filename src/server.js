@@ -42,7 +42,7 @@ app.post("/handle_pub_sub", urlencodedParser, (req, res) => {
   console.log("LOGS data : ", data);
 
   aWss.clients.forEach(function (client) {
-    client.send(JSON.stringify({ data: data, type: "gmail" }));
+    client.send(JSON.stringify({ data: JSON.parse(data), type: "gmail" }));
   });
 
   res.send(200);
@@ -53,7 +53,7 @@ app.ws("", (ws) => {
     console.log(message);
   });
 
-  cron.schedule("* * * * * *", () => {
+  cron.schedule("* * * * *", () => {
     sendTime(ws);
   });
 });
