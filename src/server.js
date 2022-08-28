@@ -36,7 +36,7 @@ app.post("/login", urlencodedParser, function (req, res) {
 });
 
 app.get("/", urlencodedParser, function (req, res) {
-  res.send("welcome, to esp world" + port);
+  res.send("welcome, to esp world " + port);
 });
 
 app.post("/handle_pub_sub", urlencodedParser, (req, res) => {
@@ -51,7 +51,7 @@ app.post("/handle_pub_sub", urlencodedParser, (req, res) => {
   //   ss.appendRow([new Date(), message.message_id, data, message]);
 
   aWss.clients.forEach(function (client) {
-    client.send(JSON.stringify(data));
+    client.send(data);
   });
 
   res.send(200);
@@ -60,15 +60,7 @@ app.post("/handle_pub_sub", urlencodedParser, (req, res) => {
 app.ws("", (ws) => {
   ws.on("message", (message) => {
     console.log(message);
-    // ws.send(JSON.stringify({ data: "received" }));
   });
-
-  // ws.send("ok");
-  console.log("ok");
-
-  //   cron.schedule("* * * * * *", () => {
-  //     sendTime(ws);
-  //   });
 });
 
 app.listen(port, () => {
